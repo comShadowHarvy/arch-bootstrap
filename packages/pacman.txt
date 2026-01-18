@@ -20,3 +20,5 @@ brightnessctl
 networkmanager
 wireplumber
 flatpak
+zsh
+stow
