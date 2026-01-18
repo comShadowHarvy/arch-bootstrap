@@ -1,0 +1,3 @@
+org.vinegarhq.Vinegar
+org.vinegarhq.Sober
+io.mrarm.mcpelauncher
