@@ -3,3 +3,6 @@ org.vinegarhq.Sober
 io.mrarm.mcpelauncher
 com.ml4w.dotfilesinstaller
 com.github.tchx84.Flatseal
+io.github.getnf.embellish
+io.github.linx_systems.ClamUI
+io.github.kolunmi.Bazaar
