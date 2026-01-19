@@ -24,3 +24,4 @@ zsh
 stow
 yazi
 ollama
+etherape
