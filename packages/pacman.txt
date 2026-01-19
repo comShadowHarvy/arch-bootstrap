@@ -26,3 +26,4 @@ yazi
 ollama
 etherape
 steam
+git-lfs
