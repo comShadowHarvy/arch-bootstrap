@@ -38,7 +38,7 @@ fi
 # 4. Install Flatpak packages
 print_message "Installing Flatpak packages..."
 if [ -f "packages/flatpak.txt" ]; then
-    flatpak install --noninteractive flathub - < packages/flatpak.txt
+    xargs -a packages/flatpak.txt flatpak install --noninteractive flathub
 else
     echo "packages/flatpak.txt not found. Skipping Flatpak packages."
 fi
