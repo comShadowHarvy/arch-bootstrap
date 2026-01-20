@@ -1,2 +1,5 @@
 python-pywalfox
 uv
+bluetui
+nmtui
+wifitui
