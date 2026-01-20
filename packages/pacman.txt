@@ -73,7 +73,6 @@ pacseek
 otf-font-awesome
 nwg-dock-hyprland
 power-profiles-daemon
-python-pywalfox
 vlc
 udisks2
 udiskie
