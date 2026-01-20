@@ -77,3 +77,4 @@ python-pywalfox
 vlc
 udisks2
 udiskie
+ouch
