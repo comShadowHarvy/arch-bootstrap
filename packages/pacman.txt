@@ -77,3 +77,4 @@ vlc
 udisks2
 udiskie
 ouch
+nmap
