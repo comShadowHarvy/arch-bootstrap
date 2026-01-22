@@ -4,3 +4,5 @@ bluetui
 nmtui
 wifitui
 netpeek
+hostapd-mana
+hostapd-wpe
