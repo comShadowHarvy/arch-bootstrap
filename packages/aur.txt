@@ -3,3 +3,4 @@ uv
 bluetui
 nmtui
 wifitui
+netpeek
