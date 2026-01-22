@@ -78,3 +78,5 @@ udisks2
 udiskie
 ouch
 nmap
+mpv
+imv
