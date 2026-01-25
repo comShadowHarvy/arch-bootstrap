@@ -89,7 +89,7 @@ dnsmasq
 bully
 nftables
 pixiewps
-isc-dhcp
+
 asleap
 hashcat
 hostapd
@@ -97,9 +97,8 @@ tcpdump
 wireshark-cli
 mdk4
 reaver
-john-the-ripper
 crunch
-beef-xss
+
 lighttpd
 openssl
 hcxtools

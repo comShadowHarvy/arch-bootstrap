@@ -6,3 +6,4 @@ wifitui
 netpeek
 hostapd-mana
 hostapd-wpe
+antigravity
