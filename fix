@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Ensure the script is run with root privileges
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root (use sudo)"
+  exit 1
+fi
+
+echo "--- Starting Full Keyring Repair (Arch, CachyOS, & BlackArch) ---"
+
+# 1. Sync system clock
+echo "Step 1: Syncing system clock..."
+timedatectl set-ntp true
+
+# 2. Clear out the old GPG directory
+echo "Step 2: Removing old GNUPG directory..."
+rm -rf /etc/pacman.d/gnupg
+
+# 3. Re-initialize the pacman keyring
+echo "Step 3: Initializing new keyring..."
+pacman-key --init
+
+# 4. Populate the standard keys
+echo "Step 4: Populating Arch and CachyOS keys..."
+pacman-key --populate archlinux
+pacman-key --populate cachyos
+
+# 5. Fix BlackArch "Unknown Trust"
+# This downloads the BlackArch strap script and populates their keys
+echo "Step 5: Trusting BlackArch keys..."
+curl -O https://blackarch.org/strap.sh
+chmod +x strap.sh
+./strap.sh
+rm strap.sh
+
+# 6. Final Sync
+echo "Step 6: Updating all keyring packages..."
+pacman -Sy archlinux-keyring cachyos-keyring blackarch-keyring --noconfirm
+
+echo "--- All keys repaired! ---"
