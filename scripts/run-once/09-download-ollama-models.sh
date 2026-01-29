@@ -1,4 +1,10 @@
 #!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+[ -f "$COMMON_SCRIPT" ] && source "$COMMON_SCRIPT"
+
+title_screen "Download Ollama Models"
+fake_loading
 
 # A list of ollama models to download
 MODELS=(
@@ -13,11 +19,12 @@ MODELS=(
 )
 
 for model in "${MODELS[@]}"; do
-  echo "Downloading $model..."
-  ollama pull "$model"
-  if [ $? -ne 0 ]; then
-    echo "Failed to download $model. Please check your network connection or the model name."
+  echo -e "${BLUE}Downloading $model...${RESET}"
+  if ollama pull "$model"; then
+      echo -e "${GREEN}Successfully downloaded $model${RESET}"
+  else
+      echo -e "${RED}Failed to download $model. Please check your network connection.${RESET}"
   fi
 done
 
-echo "Ollama model download script finished."
+echo -e "${GREEN}Ollama model download script finished.${RESET}"

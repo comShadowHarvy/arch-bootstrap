@@ -1,12 +1,17 @@
 #!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+[ -f "$COMMON_SCRIPT" ] && source "$COMMON_SCRIPT"
+
+title_screen "Set Default Apps"
+fake_loading
 
 CONFIG_DIR="$HOME/.config"
 MIMEAPPS_FILE="$CONFIG_DIR/mimeapps.list"
 
-# Create the .config directory if it doesn't exist
+echo -e "${BLUE}Creating $MIMEAPPS_FILE...${RESET}"
 mkdir -p "$CONFIG_DIR"
 
-# Create the mimeapps.list file with the desired associations
 cat > "$MIMEAPPS_FILE" << EOL
 [Default Applications]
 video/x-matroska=mpv.desktop
@@ -24,4 +29,4 @@ image/bmp=imv.desktop
 image/svg+xml=imv.desktop
 EOL
 
-echo "Default applications set in $MIMEAPPS_FILE"
+echo -e "${GREEN}Default applications set.${RESET}"

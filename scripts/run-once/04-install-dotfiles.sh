@@ -1,19 +1,12 @@
 #!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+[ -f "$COMMON_SCRIPT" ] && source "$COMMON_SCRIPT"
 
-# This script installs dotfiles using com.ml4w.dotfilesinstaller Flatpak.
+title_screen "Install Dotfiles"
+fake_loading
 
-# Function to print messages
-print_message() {
-    echo "========================================"
-    echo "$1"
-    echo "========================================"
-}
-
-print_message "Running dotfilesinstaller with hyprland-starter.dotinst..."
-
-# Execute the dotfilesinstaller Flatpak with the specified URL
-# Assuming dotfilesinstaller accepts a URL for installation.
-# This command might need adjustment if the Flatpak has different argument expectations.
+echo -e "${BLUE}Running dotfilesinstaller with hyprland-starter.dotinst...${RESET}"
 flatpak run com.ml4w.dotfilesinstaller --install-url https://raw.githubusercontent.com/mylinuxforwork/hyprland-starter/main/hyprland-starter.dotinst
 
-print_message "Dotfiles installation process initiated."
+echo -e "${GREEN}Dotfiles installation process initiated.${RESET}"

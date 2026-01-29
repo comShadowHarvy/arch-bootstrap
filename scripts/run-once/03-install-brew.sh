@@ -1,32 +1,33 @@
 #!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+[ -f "$COMMON_SCRIPT" ] && source "$COMMON_SCRIPT"
 
-# This script installs and configures Homebrew.
+title_screen "Install Homebrew"
+fake_loading
 
-# Function to print messages
-print_message() {
-    echo "========================================"
-    echo "$1"
-    echo "========================================"
-}
-
-# 1. Install Homebrew
-print_message "Installing Homebrew..."
+echo -e "${BLUE}Installing Homebrew...${RESET}"
 if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
-    echo "Homebrew is already installed."
+    echo -e "${GREEN}Homebrew is already installed.${RESET}"
 fi
 
-# 2. Set permissions
-print_message "Setting Homebrew permissions..."
-sudo chown -R $(whoami) /opt/brew
-chmod u+w /opt/brew
+echo -e "${BLUE}Setting Homebrew permissions...${RESET}"
+if [ -d "/opt/brew" ]; then
+    sudo chown -R $(whoami) /opt/brew
+    chmod u+w /opt/brew
+else
+    echo -e "${YELLOW}/opt/brew not found. Skipping permission fix (installation might be in ~/.linuxbrew).${RESET}"
+fi
 
-# 3. Configure shell
-print_message "Configuring shell for Homebrew..."
-echo 'eval "$(/opt/brew/bin/brew shellenv)"' >> ~/.zshrc
+echo -e "${BLUE}Configuring shell for Homebrew...${RESET}"
+if ! grep -q "brew shellenv" ~/.zshrc; then
+    echo 'eval "$(/opt/brew/bin/brew shellenv)"' >> ~/.zshrc
+    echo -e "${GREEN}Added brew config to .zshrc${RESET}"
+else
+    echo -e "${GREEN}Brew config already in .zshrc${RESET}"
+fi
 
-# 4. Load Homebrew environment
 eval "$(/opt/brew/bin/brew shellenv)"
-
-print_message "Homebrew installation and setup complete!"
+echo -e "${GREEN}Homebrew installation and setup complete!${RESET}"

@@ -1,20 +1,25 @@
 #!/bin/bash
 
-# ==========================================
-#  Universal Document Chat Installer (UV Edition)
-# ==========================================
+# Source common
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+if [ -f "$COMMON_SCRIPT" ]; then
+    source "$COMMON_SCRIPT"
+else
+    # Fallback to internal colors if common missing
+    GREEN='\033[0;32m'; BLUE='\033[0;34m'; RED='\033[0;31m'; NC='\033[0m'; RESET='\033[0m';
+    title_screen() { echo "=== $1 ==="; }
+    fake_loading() { sleep 1; }
+fi
+
+title_screen "Universal Document Chat Installer (UV)"
+fake_loading
 
 # --- CONFIGURATION ---
 BASE_DIR="$HOME/Documents/doc_analyzer"
 SCRIPT_NAME="analyze.py"
 
-# Colors
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
-
-echo -e "${BLUE}=== Initializing Document Analyzer ===${NC}"
+echo -e "${BLUE}=== Initializing Document Analyzer ===${RESET}"
 
 # 1. Create Directories
 echo -e "${GREEN}[+] Setting up directories in $BASE_DIR...${NC}"
