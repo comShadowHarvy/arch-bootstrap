@@ -1,8 +1,14 @@
 #!/bin/bash
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT="$SCRIPT_DIR/../../scripts/common.sh"
+[ -f "$COMMON_SCRIPT" ] && source "$COMMON_SCRIPT"
+
+title_screen "Configure Power Management"
+fake_loading
 
 # 1. Check for root/sudo and re-run with pkexec if necessary
 if [ "$EUID" -ne 0 ]; then
-    echo "Requesting privileges to install system-wide script..."
+    echo -e "${YELLOW}Requesting privileges to install system-wide script...${RESET}"
     pkexec "$0" "$@"
     exit
 fi
@@ -11,7 +17,7 @@ fi
 SCRIPT_PATH="/usr/local/bin/toggle_sleep.sh"
 RULE_PATH="/etc/udev/rules.d/99-powertoggle.rules"
 
-echo "Installing power management logic..."
+echo -e "${BLUE}Installing power management logic...${RESET}"
 
 # 2. Create the toggle script
 cat << 'EOF' > $SCRIPT_PATH
@@ -42,7 +48,8 @@ chown root:root $SCRIPT_PATH
 echo 'SUBSYSTEM=="power_supply", ACTION=="change", RUN+="/usr/local/bin/toggle_sleep.sh"' > $RULE_PATH
 
 # 5. Reload system rules
+echo -e "${BLUE}Reloading udev rules...${RESET}"
 udevadm control --reload-rules
 udevadm trigger
 
-echo "Success! Logic installed and triggered."
+echo -e "${GREEN}Success! Logic installed and triggered.${RESET}"
