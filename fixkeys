@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Ensure the script is run with root privileges
+if [[ $EUID -ne 0 ]]; then
+  echo "This script must be run as root (use sudo)"
+  exit 1
+fi
+
+echo "--- Starting Keyring Repair for CachyOS ---"
+
+# 1. Sync system clock to prevent time-based signature expiration
+echo "Step 1: Syncing system clock..."
+timedatectl set-ntp true
+
+# 2. Clear out the old, potentially corrupted GPG directory
+echo "Step 2: Removing old GNUPG directory..."
+rm -rf /etc/pacman.d/gnupg
+
+# 3. Re-initialize the pacman keyring
+echo "Step 3: Initializing new keyring..."
+pacman-key --init
+
+# 4. Populate Arch and CachyOS keys
+echo "Step 4: Populating Arch Linux and CachyOS keys..."
+pacman-key --populate archlinux
+pacman-key --populate cachyos
+
+# 5. Refresh the keyring packages from the servers
+echo "Step 5: Updating keyring packages..."
+pacman -Sy archlinux-keyring cachyos-keyring --noconfirm
+
+echo "--- Keyring Repair Complete! ---"
+echo "You should now be able to run 'sudo pacman -Syu' safely."
