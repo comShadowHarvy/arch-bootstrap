@@ -93,4 +93,20 @@ for model in "${MODELS[@]}"; do
     docker exec ollama ollama pull "$model"
 done
 
+# 7. Setup OpenClaw
+echo -e "${GREEN}[+] Setting up OpenClaw...${NC}"
+OPENCLAW_REPO="https://github.com/phioranex/openclaw-docker"
+OPENCLAW_DIR="$HOME/git/openclaw-docker"
+
+if [ ! -d "$OPENCLAW_DIR" ]; then
+    echo -e "${BLUE}[*] Cloning OpenClaw to $OPENCLAW_DIR...${NC}"
+    git clone "$OPENCLAW_REPO" "$OPENCLAW_DIR"
+else
+    echo -e "${BLUE}[*] Updating OpenClaw at $OPENCLAW_DIR...${NC}"
+    cd "$OPENCLAW_DIR" && git pull
+fi
+
+echo -e "${GREEN}[+] Running OpenClaw Installer...${NC}"
+bash <(curl -fsSL https://raw.githubusercontent.com/phioranex/openclaw-docker/main/install.sh)
+
 echo -e "${BLUE}=== Setup Complete ===${NC}"
